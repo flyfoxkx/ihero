@@ -1,44 +1,39 @@
 //添加地图
-function addMap(cx,cy){
-    var i,j,index,indexX,indexY;
+function addMap(cx){
+    var i,index;
     var bitmapdata,bitmap;
     var mapX = mapLayer.x ;
     var mapY = mapLayer.y ;
-    var mx = cx<0?-1:0,my = cy<0?-1:0;
+    var mx = cx<0?-1:0;
     mapLayer.removeAllChild();
-    //在地图层上，画出1*30的小图片
-    for(i=my;i<1 +Math.abs(cy) && i-mapY < map.length;i++){
-        var mapx = 0;
-        for(j=mx;j<30 +Math.abs(cx)&& j-mapX < map[0].length;j++){
-            //从地图数组中得到相应位置的图片坐标
-            index = map[i-mapY][j-mapX];
-            //小图片的竖坐标
-            indexY = Math.floor(index /10);
-            //小图片的横坐标
-            indexX = index - indexY*10;
-            //得到小图片
-            bitmapdata = new LBitmapData(imglist["map"+index]);
-            bitmap = new LBitmap(bitmapdata);
-            //设置小图片的显示位置
-            bitmap.x = mapx;
-            mapx += bitmapdata.width+10;
-            bitmap.y = (i+1)*64 - bitmapdata.height;
-            //将小图片显示到地图层
-            mapLayer.addChild(bitmap);
-        }
+    //在地图层上，画出长512像素的地图
+    var mapx = 0;
+    alert(mapX)
+    for(i=mx;i<30 +Math.abs(cx)&& i-mapX < map[0].length;i++){
+        //从地图数组中得到相应位置的图片坐标
+        index = map[mapY][i-mapX];
+        //得到小图片
+        bitmapdata = new LBitmapData(imglist["map"+index]);
+        bitmap = new LBitmap(bitmapdata);
+        //设置小图片的显示位置
+        bitmap.x = mapx - Math.abs(cx);
+        mapx += bitmapdata.width+10;
+        bitmap.y = 64 - bitmapdata.height;
+        //将小图片显示到地图层
+        mapLayer.addChild(bitmap);
     }
 }
 //移除多余地图块
 function delMap(){
-    var bitmap,i;
-    for(i=0;i<mapLayer.childList.length;i++){
-        bitmap = mapLayer.childList[i];
-        if(bitmap.x + mapLayer.x < 0 || bitmap.x + mapLayer.x >= 1480 ||
-            bitmap.y + mapLayer.y < 0 || bitmap.y + mapLayer.y >= 1288){
-            mapLayer.removeChild(bitmap);
-            i--;
-        }
-    }
+    //var bitmap,i;
+    //for(i=0;i<mapLayer.childList.length;i++){
+    //    bitmap = mapLayer.childList[i];
+    //    if(bitmap.x + mapLayer.x < 0 || bitmap.x + mapLayer.x >= 1480 ||
+    //        bitmap.y + mapLayer.y < 0 || bitmap.y + mapLayer.y >= 1288){
+    //        mapLayer.removeChild(bitmap);
+    //        i--;
+    //    }
+    //}
 }
 //添加人物
 function addChara(){
@@ -51,11 +46,12 @@ function addChara(){
             bitmapdata = new LBitmapData(imglist[charaObj.img]);
             chara = new Character(true,i,bitmapdata,4,2);
             player = chara;
-        }else{
-            //加入npc
-            bitmapdata = new LBitmapData(imglist[charaObj.img]);
-            chara = new Character(false,i,bitmapdata,4,4);
         }
+        //else{
+        //    //加入npc
+        //    bitmapdata = new LBitmapData(imglist[charaObj.img]);
+        //    chara = new Character(false,i,bitmapdata,4,4);
+        //}
         chara.x = charaObj.x * 8;
         chara.y = charaObj.y * 32;
         charaLayer.addChild(chara);

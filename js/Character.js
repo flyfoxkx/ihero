@@ -80,7 +80,7 @@ Character.prototype.onmove = function (){
 	if(self.moveIndex >= ml_cnt){
 		self.moveIndex = 0;
 		//一个地图步长移动完成后，如果地图处于滚动状态，则移除多余地图块
-		if(mapmove)delMap();
+//		if(mapmove)delMap();
 		//判断方向是否改变
 		if(self.direction != self.direction_next){
 			self.direction = self.direction_next;
@@ -174,31 +174,22 @@ Character.prototype.checkMap = function (dir){
 	mapmove = false;
 	//如果不是英雄，则地图不需要滚动
 	if(!self.isHero)return;
-	
 	switch (dir){
 		case UP:
-			if(self.y + charaLayer.y> STEP)break;
-			if(mapLayer.y >= 0)break;
-			addMap(0,-1);
-			mapmove = true;
 			break;
 		case LEFT:
-			if(self.x + charaLayer.x > STEP)break;
-			if(mapLayer.x >= 0)break;
-			addMap(-1,0);
+//			if(self.x + charaLayer.x > STEP)break;
+			if(self.x - STEP >= 0)break;
+			addMap(-1);
 			mapmove = true;
 			break;
 		case RIGHT:
-			if(self.x < 480 - 2*STEP)break;
-			if(480 - mapLayer.x >= map[0].length*STEP)break;
-			addMap(1,0);
+			if(self.x < 512 - STEP)break;
+	//		if(480 - mapLayer.x >= map[0].length*STEP)break;
+			addMap(1);
 			mapmove = true;
 			break;
 		case DOWN:
-			if(self.y < 288 - 2*STEP)break;
-			if(288 - mapLayer.y >= map.length*STEP)break;
-			addMap(0,1);
-			mapmove = true;
 			break;
 	}
 };

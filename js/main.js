@@ -3,7 +3,7 @@
  * @author vicLee
  * @email leekaixuan@qq.com
  **/
-init(50,"mylegend",256,300,main);
+init(50,"mylegend",512,300,main);
 /**层变量*/
 //显示进度条所用层
 var loadingLayer;
@@ -170,7 +170,7 @@ function initScript(){
 
     //添加地图
     addMap(0,0);
-    delMap();
+//    delMap();
     //添加人物
     addChara();
 }
